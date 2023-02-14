@@ -13,25 +13,23 @@ import (
 
 // setup two routes, one for shortening the url
 // the other for resolving the url
-// for example if the short is `4fg`, the user
-// must navigate to `localhost:3000/4fg` to redirect to
-// original URL. The domain can be changes in .env file
 func setupRoutes(app *fiber.App) {
 	app.Get("/:url", routes.ResolveURL)
 	app.Post("/api/v1", routes.ShortenURL)
 }
 
 func main() {
+	// Load .env file
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println(err)
 	}
+	//Here we use fiber as a web framework which works
+	//the same as express in javascript
 	app := fiber.New()
-
-	//app.Use(csrf.New())
 	app.Use(logger.New())
-
 	setupRoutes(app)
 
+	//start the server for the reuqired port
 	log.Fatal(app.Listen(os.Getenv("APP_PORT")))
 }
