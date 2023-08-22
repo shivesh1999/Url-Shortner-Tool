@@ -1,15 +1,15 @@
 version: "3"
 
 services:
-  api:
+  goolang-api-service:
     build: api
     ports:
       - "3000:3000"
     depends_on:
-      - db
-  db:
-    build: db
+      - redis-db
+  redis-db:
+    image: redis:alpine
     ports:
       - "6379:6379"
     volumes:
-      - .data:/data
+      - .redis-data:/data
